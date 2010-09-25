@@ -1,0 +1,39 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SimplePages Plugin for CakePHP\n"
+"POT-Creation-Date: 2010-09-15 10:56+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Pierre-Emmanuel FRINGANT <pierre.fringant@gmail.com>\n"
+"Language-Team: Pierre-Emmanuel Fringant\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: \controllers\simple_pages_controller.php:74;113
+msgid "Invalid Simple Page."
+msgstr "Page introuvable."
+
+#: \controllers\simple_pages_controller.php:92;122
+msgid "The Simple Page has been saved."
+msgstr "La page a été enregistrée."
+
+#: \controllers\simple_pages_controller.php:98;128
+msgid "The Simple Page could not be saved. Please, try again."
+msgstr "La page n'a pas pu être sauvegardée. Veuillez corriger les erreurs."
+
+#: \controllers\simple_pages_controller.php:147
+msgid "Invalid id for Simple Page."
+msgstr "Identifiant de page invalide."
+
+#: \controllers\simple_pages_controller.php:155
+msgid "The Simple Page has been deleted."
+msgstr "La page a bien été supprimée."
+
+#: \controllers\simple_pages_controller.php:162
+msgid "The Simple Page was not deleted."
+msgstr "Impossible de supprimer la page."
+

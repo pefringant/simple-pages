@@ -1,0 +1,109 @@
+h1. SimplePages CakePHP 1.3 plugin
+
+The idea of this plugin is to provide the same features as the default "PagesController":http://book.cakephp.org/view/958/The-Pages-Controller of CakePHP, but stored in the database for easy editing.
+
+h1. 1. Installation
+
+h2. 1.1. Requirements
+
+The plugin uses the Sluggable plugin, developed by "Mariano Iglesias":http://cake-syrup.sourceforge.net/ingredients/sluggable-behavior and packed as a plugin by "Matthieu Sadouni":http://github.com/msadouni/cakephp-sluggable-plugin
+
+To install, copy the 'sluggable' directory to the app 'plugins' folder:
+
+<pre><code>git clone git://github.com/msadouni/cakephp-sluggable-plugin.git sluggable</code></pre>
+
+Or click 'download' and copy the content of the compressed file into a 'plugins/sluggable' folder.
+
+h2. 1.2. Files
+
+To install the files of the plugin itself, copy the 'simple_pages' directory to the app 'plugins' folder:
+
+<pre><code>git clone git://github.com/kalt/simple-pages.git simple_pages</code></pre>
+
+Or click 'download' and copy the content of the compressed file into a 'plugins/simple_pages' folder.
+
+h2. 1.3. DB Table
+
+Create the db table from the migration schema in plugins/simple_pages/config/schema/schema.php :
+
+<pre><code>cake schema create -plugin simple_pages</code></pre>
+ 
+h1. 2. Usage
+
+h2. 2.1. View files
+
+The following actions are available :
+
+* index(): Lists all SimplePages
+* view($slug): Returns data of the SimplePage $slug
+* admin_index(): Lists all SimplePages
+* admin_add(): Adds a SimplePage
+* admin_edit($id): Edits the SimplePage $id
+* admin_delete($id): Deletes the SimplePage $id
+
+The only thing you need to do is to create the corresponding views in your app :
+
+* index() -> app/views/plugins/simples_pages/simple_pages/index.ctp
+* view($slug) -> app/views/plugins/simples_pages/simple_pages/view.ctp
+* admin_index() -> app/views/plugins/simples_pages/simple_pages/admin_index.ctp
+* admin_add() -> app/views/plugins/simples_pages/simple_pages/admin_add.ctp
+* admin_edit() -> app/views/plugins/simples_pages/simple_pages/admin_edit.ctp
+* admin_delete() -> no view needed
+
+Index, view and admin_index data are in $data, admin_add and admin_edit use $this->data.
+
+h2. 2.2. Session flash messages layouts
+
+If you use Session flash messages layouts, you can define them in you app bootstrap :
+
+<pre><code>// APP/config/bootstrap.php
+Configure::write('SimplePages.flashLayouts', array(
+	'success' => 'message_success',
+	'notice' => 'message_notice',
+	'error' => 'message_error',
+));</code></pre>
+
+h2. 2.3. Routes
+
+The default routes to access the plugin actions are :
+
+* /simple_pages/simple_pages/{action name} for index and view
+* /admin/simple_pages/simple_pages/{action name without 'admin_'} for admin actions
+
+We believe that the most convenient url to access the view action is /{page slug}, so we added a CakeRoute class to quickly configure the app Router class.
+
+<pre><code>// APP/config/routes.php
+App::import('Lib', 'SimplePages.routes/SimplePageRoute');
+ 
+Router::connect(
+	'/:slug', 
+	array(
+		'plugin' => 'simple_pages',
+		'controller' => 'simple_pages', 
+		'action'  => 'view',
+	), 
+	array(
+		'routeClass' => 'SimplePageRoute',
+		'pass' => array('slug')
+	)
+);</code></pre>
+
+Note that it does not conflict with any other route with the same pattern, ':slug'. If no SimplePage with the url $slug is found, the Router goes on. All SimplePages slugs are cached to avoid performance hit.
+
+h2. 2.4. Links
+
+The links must be built this way :
+
+<pre><code>echo $html->link("About us", array('plugin' => 'simple_pages', 'controller' => 'simple_pages', 'action' => 'view', 'slug' => 'about-us'));</code></pre>
+
+**Warning**: you MUST change all the links in your app layouts by adding the key 'plugin' => null :
+
+<pre><code>// APP/views/layouts/default.ctp
+echo $html->link("Posts", array('plugin' => null, 'controller' => 'posts', 'action' => 'index'));
+</code></pre>
+
+If you don't change the layout links, they will be broken inside the' index' and 'view' views of the plugin.
+
+h1. 3. Translations
+
+For now the plugin is available in English and French. To add a language, translate the .pot file located at plugins/simple_pages/locale/simple_pages.pot and save it as /plugins/simple_pages/locale/{your locale}/simple_message.po or in your app locale folder.

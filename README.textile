@@ -54,7 +54,7 @@ Index, view and admin_index data are in $data, admin_add and admin_edit use $thi
 
 h2. 2.2. Session flash messages layouts
 
-If you use Session flash messages layouts, you can define them in you app bootstrap :
+If you use "Session flash messages layouts":http://book.cakephp.org/view/1313/setFlash, you can define them in you app bootstrap :
 
 <pre><code>// APP/config/bootstrap.php
 Configure::write('SimplePages.flashLayouts', array(
